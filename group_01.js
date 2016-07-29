@@ -7,9 +7,32 @@ var employees = [atticus, jem, boo, scout];
 
 var maxIncome = 65000;
 
+function Employee(employeeArray) {
+
+	// Calculate employee bonus.
+	this.bonusPercent = calSti(employeeArray[1], employeeArray[2], employeeArray[3]);
+
+	// Convert income/salary to a number.
+	var income = parseInt(employeeArray[2]);
+
+  // Calculate bonus in dollars.
+	this.bonus = (this.bonusPercent * .01) * income;
+
+	// Get total salary by adding the bonus to the base salary.
+	this.totalSalary = this.bonus + income;
+
+	// Round the employees total salary to nearest whole number.
+	Math.round(this.totalSalary);
+
+	this.name = employeeArray[0];
+	this.number = employeeArray[1];
+	this.salary = employeeArray[2];
+	this.rating = employeeArray[3];
+}
+
 for(var i = 0; i< employees.length; i++){
-	var emp = processEmployee(employees[i]);
-	console.log("Employee name: ", emp[0], " - ", "Bonus: ", emp[1] + "%", "(" + "$" + emp[4] + ")" + " which totals $" + emp[3] + ".");
+	var emp = new Employee(employees[i]);
+	console.log("Employee name: ", emp.name, " - ", "Bonus: ", emp.bonusPercent + "%", "(" + "$" + emp.bonus + ")" + " which totals $" + emp.totalSalary + ".");
 };
 
 function calSti(number, salary, rating) {
@@ -22,7 +45,7 @@ function calSti(number, salary, rating) {
 
     	case 3:
     	    bonus = 4;
-    	    break; 
+    	    break;
 
     	case 4:
     	    bonus = 6;
@@ -35,7 +58,7 @@ function calSti(number, salary, rating) {
     	default:
     	    alert("Please enter a whole number rating 1-5");
     }
-    
+
     if(salary > maxIncome && number.length == 4) {
     	bonus += 4;
     } else if(salary < maxIncome && number.length == 4) {
@@ -53,27 +76,3 @@ function calSti(number, salary, rating) {
     return bonus;
 
 }
-
-function processEmployee(employee) {
-	var array = [];
-
-	// Push employee name to new array.
-	array.push(employee[0]);
-
-	// Calculate employee bonus and push into the array.
-	array.push(calSti(employee[1], employee[2], employee[3]));
-
-    // Convert income/salary to a number.
-	var income = parseInt(employee[2]);
-
-    // Get total salary by calculating bonus in dollars and adding to base salary.
-    array.push(((array[1] * .01) * income) + income);
-
-    // Round the employees total salary to nearest whole number.
-	array.push(Math.round(array[2]));
-	array.push((array[1] * .01) * income);
-
-    // Return the new array.
-	return array;
-}
-
